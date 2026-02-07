@@ -1,0 +1,69 @@
+@media print {
+/* 1) Remove any opaque backgrounds that hide the watermark */
+  .print-format table,
+  .print-format .table,
+  .print-format tr,
+  .print-format td,
+  .print-format th,
+  .print-format thead,
+  .print-format tbody,
+  .print-format tfoot {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  .print-format .table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: transparent !important;
+  }
+  /* Keep Frappe/ERPNext happy: no printer margins */
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Full-page background (does not affect layout) */
+  .r4s-pad-bg{
+    z-index: 0 !important;
+  }
+  .r4s-pad-bg img{
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  /* Content above bg */
+  .print-format-wrapper,
+  .print-format{
+    position: relative !important;
+    z-index: 2 !important;
+    background: transparent !important;
+    box-sizing: border-box !important;
+
+    /* ✅ your “text safe area” — keeps your original style */
+    padding: 55mm 25mm 50mm 25mm !important;
+
+    /* ✅ makes padding repeat on each printed page fragment */
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .letter-head, .print-heading{
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Table stability */
+  thead { display: table-header-group; }
+  tfoot { display: table-footer-group; }
+  tr, td, th { page-break-inside: avoid; }
+
+  /* Extra blank page killer */
+  .page-break:last-child { display: none !important; }
+}

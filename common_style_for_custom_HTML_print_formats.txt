@@ -1,0 +1,39 @@
+@page { size: A4; margin: 0; } /* size/margins are controlled via @page */ /* :contentReference[oaicite:1]{index=1} */
+
+.print-format {
+  width: 210mm;
+  min-height: 297mm; /* ✅ KEY: prevents bottom half going blank */
+  margin: 0 !important;
+  overflow: visible !important; /* avoid accidental clipping */ /* :contentReference[oaicite:1]{index=1} */    
+  position: relative;
+  box-sizing: border-box;
+  padding: 27mm 15mm 28mm 35mm;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* Background layer */
+.print-format::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  background-image: url("YOUR_FULL_COVER_WITH_WATERMARK_LINK_HERE");
+  background-repeat: no-repeat;
+
+  /* ✅ key change: lock to top so the letterhead doesn't drift */
+  background-position: top center;
+
+  /* Option A (best if your image is designed as exact A4): */
+  background-size: 210mm 297mm;
+
+  /* Option B (if your image has bleed & you prefer cropping):
+     background-size: cover;
+  */
+}
+
+.print-format > * {
+  position: relative;
+  z-index: 1;
+}
